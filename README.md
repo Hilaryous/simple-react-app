@@ -1,4 +1,4 @@
-# Muve Technical Take Home Problem
+# Technical Take Home Problem
 
 The goal of this exercise is to complete as many of the
 tasks as you can in the order they are listed. Please do
