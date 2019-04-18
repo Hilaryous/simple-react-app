@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 
 const Person = ({
   name, height, mass, gender, homeworld,
-  getHomeWorldForUser
+  setHomeWorldForUser
 }) => (
   <div className="person">
-    { console.warn('I RENDERED') }
     <div className="title">{name}</div>
     <span className="text">
       {height}
@@ -19,18 +18,16 @@ const Person = ({
     </span>
     {" | "}
     <span className="text">{gender}</span>
-    <button onClick={e => getHomeWorldForUser(homeworld)}>Homeworld</button>
+    <button onClick={e => setHomeWorldForUser(homeworld)}>Homeworld</button>
   </div>
 );
 
 Person.propTypes = {
-  person: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    mass: PropTypes.string.isRequired,
-    gender: PropTypes.string.isRequired,
-    homeworld: PropTypes.string.isRequired
-  }).isRequired
+  name: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  mass: PropTypes.string.isRequired,
+  gender: PropTypes.string.isRequired,
+  homeworld: PropTypes.string.isRequired
 };
 
 export default Person;

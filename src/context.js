@@ -5,57 +5,13 @@ const Context = React.createContext();
 
 class PeopleContextProvider extends Component {
   state = {
-    people: [],
-    homeworld: {}
+    homeworldUrl: ''
   };
 
-  componentDidMount() {
-    this.fetchPeople()
-  }
-
-  getHomeWorldForUser = url => {
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          homeworld: res
-        });
-      });
-  }; // eslint-disable-line no-unused-vars
-
-  timer = null;
-  filterPeopleByName = name => {
-    //they're performing a new search, empty out the homeworld panel
-    this.setState({ homeworld: {} });
-    name = name.trim();
-    if (name.length === 0) {
-      //if they clear out the search box, empty the results
-      this.setState({ people: [] });
-    } else {
-      //use a timer so we don't make unnecessary api requests (reset the 0.5 second timeout onchange)
-      clearTimeout(this.timer);
-      this.timer = setTimeout(this.searchPeople, 500, name);
-    }
-  }; // eslint-disable-line no-unused-vars
-
-  fetchPeople = name => {
-    fetch(`https://swapi.co/api/people`)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          people: res.results
-        });
-      });
-  };
-
-  searchPeople = name => {
-    fetch(`https://swapi.co/api/people?search=${name}`)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          people: res.results
-        });
-      });
+  setHomeWorldForUser = url => {
+    var parser = document.createElement('a');
+    parser.href = url
+    this.setState({ homeworldUrl: parser.pathname });
   };
 
   render() {
@@ -64,8 +20,7 @@ class PeopleContextProvider extends Component {
       <Context.Provider
         value={{
           ...this.state,
-          filterPeopleByName: this.filterPeopleByName,
-          getHomeWorldForUser: this.getHomeWorldForUser
+          setHomeWorldForUser: this.setHomeWorldForUser
         }}
       >
         {children}
@@ -73,6 +28,7 @@ class PeopleContextProvider extends Component {
     );
   }
 }
+
 PeopleContextProvider.propTypes = {
   children: PropTypes.node.isRequired
 };

@@ -5,7 +5,16 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link-error": "^1.1.10",
+    "apollo-link-rest": "^0.7.2",
+    "graphql": "^14.2.1",
+    "graphql-anywhere": "^4.2.1",
+    "graphql-tag": "^2.10.1",
+    "humps": "^2.0.1",
     "react": "16.5.2",
+    "react-apollo": "^2.5.4",
     "react-dom": "16.5.2",
     "react-scripts": "2.0.3"
   },

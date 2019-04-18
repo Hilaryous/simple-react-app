@@ -1,21 +1,14 @@
 import React from "react";
-import PeopleContext from "../context";
 
-const SearchBar = ({ filterPeopleByName }) => (
+const SearchBar = () => (
   <div className="search-bar">
     <input
-      onChange={e => filterPeopleByName(e.target.value)}
+      onChange={e => e.target.value}
       type="text"
       className="input"
-      placeholder="Search for a person..."
+      placeholder="This does not work..."
     />
   </div>
-);
+)
 
-export default () => (
-  <PeopleContext.Consumer>
-    {({ filterPeopleByName }) => (
-      <SearchBar filterPeopleByName={filterPeopleByName} />
-    )}
-  </PeopleContext.Consumer>
-);
+export default SearchBar;

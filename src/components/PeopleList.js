@@ -1,42 +1,40 @@
 import React from "react";
+import { Query } from "react-apollo";
+import FETCH_PEOPLE from '../queries/getPeople'
 import PropTypes from "prop-types";
 import Person from "./Person";
 import PeopleContext from "../context";
 
-const PeopleList = ({ people, getHomeWorldForUser }) => (
-  <div className="people-list">
-    {people.map(({name, height, mass, gender, homeworld}) => (
-      <Person
-        {...{
-          name,
-          height,
-          mass,
-          gender,
-          homeworld,
-        }}
-        key={name}
-        getHomeWorldForUser={getHomeWorldForUser}
-      />
-    ))}
-  </div>
+const PeopleList = ({ setHomeWorldForUser }) => (
+  <Query query={FETCH_PEOPLE}>
+    {({ data }) => (
+      <div className="people-list">
+        {data && data.people && data.people.results && data.people.results.map(({name, height, mass, gender, homeworld}) => (
+          <Person
+            {...{
+              name,
+              height,
+              mass,
+              gender,
+              homeworld,
+            }}
+            key={name}
+            setHomeWorldForUser={setHomeWorldForUser}
+          />
+        ))}
+          </div>
+    )}
+  </Query>
 );
 
 PeopleList.propTypes = {
-  people: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      height: PropTypes.string.isRequired,
-      mass: PropTypes.string.isRequired,
-      gender: PropTypes.string.isRequired,
-      homeworld: PropTypes.string.isRequired
-    })
-  ).isRequired
+  setHomeWorldForUser: PropTypes.func
 };
 
 export default () => (
   <PeopleContext.Consumer>
-    {({ people, getHomeWorldForUser }) => (
-      <PeopleList people={people} getHomeWorldForUser={getHomeWorldForUser} />
+    {({ setHomeWorldForUser }) => (
+      <PeopleList setHomeWorldForUser={setHomeWorldForUser} />
     )}
   </PeopleContext.Consumer>
 );

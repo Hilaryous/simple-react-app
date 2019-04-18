@@ -1,30 +1,34 @@
 import React from "react";
+import { Query } from "react-apollo";
+import FETCH_HOMEWORLD from '../queries/getHomeWorldForUser'
 import PropTypes from "prop-types";
 import PeopleContext from "../context";
 
-const HomeWorld = ({ homeworld }) => (
-  <div className="homeworld">
-    <div className="title">Home World Details</div>
-    {homeworld.name && <div className="text">{`Name: ${homeworld.name}`}</div>}
-    {homeworld.climate && (
-      <div className="text">{`Climate: ${homeworld.climate}`}</div>
-    )}
-    {homeworld.gravity && (
-      <div className="text">{`Gravity: ${homeworld.gravity}`}</div>
-    )}
-  </div>
+const HomeWorld = ({ url }) => (
+  <Query query={FETCH_HOMEWORLD} variables={{ url }}>
+    {({ data }) => {
+      const homeworld = (data && data.homeworld) || {}
+      return (
+        <div className="homeworld">
+          <div className="title">Home World Details</div>
+          {homeworld.name && <div className="text">{`Name: ${homeworld.name}`}</div>}
+          {homeworld.climate && (
+            <div className="text">{`Climate: ${homeworld.climate}`}</div>
+          )}
+          {homeworld.gravity && (
+            <div className="text">{`Gravity: ${homeworld.gravity}`}</div>
+          )}
+        </div>
+      ) }}
+  </Query>
 );
 
 HomeWorld.propTypes = {
-  homeworld: PropTypes.shape({
-    name: PropTypes.string,
-    climate: PropTypes.string,
-    gravity: PropTypes.string
-  }).isRequired
+  url: PropTypes.string
 };
 
 export default () => (
   <PeopleContext.Consumer>
-    {({ homeworld }) => <HomeWorld homeworld={homeworld} />}
+    {({ homeworldUrl }) => <HomeWorld url={homeworldUrl} />}
   </PeopleContext.Consumer>
 );
